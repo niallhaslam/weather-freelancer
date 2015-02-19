@@ -1,0 +1,78 @@
+<table border="1" rules="all">
+  <tr>
+    <th rowspan="2">24 hours ending</th>
+    <th colspan="2">Temperature</th>
+    <th colspan="3">Wind</th>
+    <th rowspan="2">Rainfall</th>
+  </tr>
+  <tr>
+    <th>day max</th>
+    <th>night min</th>
+    <th>dir</th>
+    <th>average</th>
+    <th>max gust</th>
+  </tr>
+  <tr>
+    <td>2015/02/12 08:31 UTC</td>
+    <td>6.7 &deg;C</td>
+    <td>0.4 &deg;C</td>
+    <td>SSW</td>
+    <td>0 mph</td>
+    <td>6 mph</td>
+    <td>0.0 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/13 08:31 UTC</td>
+    <td>8.3 &deg;C</td>
+    <td>5.6 &deg;C</td>
+    <td>SSE</td>
+    <td>3 mph</td>
+    <td>17 mph</td>
+    <td>2.4 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/14 08:31 UTC</td>
+    <td>7.6 &deg;C</td>
+    <td>4.5 &deg;C</td>
+    <td>SE</td>
+    <td>1 mph</td>
+    <td>9 mph</td>
+    <td>2.1 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/15 08:31 UTC</td>
+    <td>11.9 &deg;C</td>
+    <td>3.1 &deg;C</td>
+    <td>SSE</td>
+    <td>1 mph</td>
+    <td>9 mph</td>
+    <td>0.0 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/16 08:31 UTC</td>
+    <td>9.6 &deg;C</td>
+    <td>2.2 &deg;C</td>
+    <td>SSE</td>
+    <td>1 mph</td>
+    <td>14 mph</td>
+    <td>2.1 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/17 08:31 UTC</td>
+    <td>9.7 &deg;C</td>
+    <td>0.5 &deg;C</td>
+    <td>NE</td>
+    <td>1 mph</td>
+    <td>6 mph</td>
+    <td>0.9 mm</td>
+  </tr>
+  <tr>
+    <td>2015/02/18 08:31 UTC</td>
+    <td>8.6 &deg;C</td>
+    <td>7.9 &deg;C</td>
+    <td>ESE</td>
+    <td>2 mph</td>
+    <td>9 mph</td>
+    <td>0.3 mm</td>
+  </tr>
+</table>

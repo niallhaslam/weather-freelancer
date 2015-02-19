@@ -1,0 +1,64 @@
+<table border="1" rules="all">
+  <tr>
+    <th colspan="2" class="left">
+      24 hours ending 0831 UTC on 18 Feb 2015 
+    </th>
+    <th colspan="2">Date &amp; time</th>
+  </tr>
+  <tr>
+    <th class="right">Daytime max temp</th>
+    <td>8.6 &deg;C</td>
+    <td>2015/02/17</td><td>1231 UTC</td>
+  </tr>
+  <tr>
+    <th class="right">Night min temp</th>
+    <td>7.9 &deg;C</td>
+    <td>2015/02/17</td><td>2231 UTC</td>
+  </tr>
+  <tr>
+    <th class="right">Total rainfall</th>
+    <td>0.3 mm</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th class="right">Average wind speed</th>
+    <td>2 mph</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th class="right">Highest gust speed</th>
+    <td>9 mph</td>
+    <td>2015/02/17</td><td>2201 UTC</td>
+  </tr>
+  <tr><th colspan="4">&nbsp;</th></tr>  <tr>
+    <th colspan="2" class="left">
+      From 0900 UTC on 18 Feb to 2231 UTC on 18 Feb 2015 
+    </th>
+    <th colspan="2">Date &amp; time</th>
+  </tr>
+  <tr>
+    <th class="right">Daytime max temp</th>
+    <td>12.1 &deg;C</td>
+    <td>2015/02/18</td><td>1231 UTC</td>
+  </tr>
+  <tr>
+    <th class="right">Night min temp</th>
+    <td>9.5 &deg;C</td>
+    <td>2015/02/18</td><td>2231 UTC</td>
+  </tr>
+  <tr>
+    <th class="right">Total rainfall</th>
+    <td>0.6 mm</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th class="right">Average wind speed</th>
+    <td>3 mph</td>
+    <td colspan="2"></td>
+  </tr>
+  <tr>
+    <th class="right">Highest gust speed</th>
+    <td>10 mph</td>
+    <td>2015/02/18</td><td>1231 UTC</td>
+  </tr>
+</table>
