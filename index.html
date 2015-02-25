@@ -35,15 +35,24 @@
   <script type="text/javascript" language="javascript">
     //load the table package
     google.load('visualization', '1', {packages:['table']});
-      $(document).ready(function() {
+    //load the chart package
+    google.load('visualization', '1', {packages:['corechart']});
+    //load the gauges package
+    google.load('visualization', '1', {packages:['gauge']});
+    //load the image chart for the wind vane
+    google.load("visualization", "1.0", {packages:["imagechart"]});
+    
+    $(document).ready(function() {
         
         var datatbl = new google.visualization.DataTable();
-        
+        //format the date values
+        var formatter1 = new google.visualization.DateFormat({pattern: "d MMM yyyy '  'hh:mm aa"});
+        var formatter2 = new google.visualization.DateFormat({pattern: "hh:mm aa"});
         //get the data from the file and load it into the google datatable
         $.getJSON('data/live_json.txt', function(data) {
-        
-            //create the rows and columns in the datatable
-        	var noElements = data.length; 
+            
+            
+            var noElements = data.length; 
             datatbl.addColumn('datetime', 'Date');
             datatbl.addColumn('string', 'Time');
             datatbl.addColumn('number', 'Outside Temp');
@@ -55,8 +64,6 @@
             datatbl.addColumn('number', 'Rain (mm)');
             datatbl.addColumn('number', 'Abs Pressure (hPa)');
             datatbl.addRows(noElements);
-            
-            //Put the data into the datatable
             $.each(data, function(i,v) {
                  // set the values for both the name and the population
                  datatbl.setValue(i, 0, new Date(v.Date));
@@ -69,17 +76,151 @@
                  datatbl.setValue(i, 7, v.WindGust);
                  datatbl.setValue(i, 8, v.Rain);
                  datatbl.setValue(i, 9, v.AbsPressure);
-            }); 
+            });
             
-            //create an instance of the google table chart
+            //format the dates
+            formatter1.format(datatbl,0);
+            
+            //declare the chart (which is a table) and draw it 
+            var viewTable = new google.visualization.DataView(datatbl);
+            viewTable.setColumns([0,2,3,4,8,9]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
+            table.draw(viewTable);
+
             
-            //draw the table chart
-            table.draw(datatable);
-        
+            //draw the gauge - work in progress
+            var viewGauge = new google.visualization.DataView(datatbl);
+            viewGauge.setColumns([1,2,3]);
+            viewGauge.setRows([noElements-1]);
+            var optionsGauge = {
+              width: 640,
+              height: 240, 
+              redFrom: 35, 
+              redTo: 45,
+              yellowFrom:28, 
+              yellowTo: 35, 
+              minorTicks: 5, 
+              max: 45
+            };
+            var gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
+            gauge.draw(viewGauge, optionsGauge);
         });
-});
-    </script>
+  
+        $.getJSON('data/6hrs_json.txt', function(data1) {
+            var datatbl1 = new google.visualization.DataTable();
+            
+            var noElements = data1.length; 
+            datatbl.addRows(noElements);
+            $.each(data1, function(i,v) {
+                 // set the values for both the name and the population
+                 datatbl.setValue(i+7, 0, new Date(v.Date));
+                 datatbl.setValue(i+7, 1, v.Time);
+                 datatbl.setValue(i+7, 2, v.TempOut);
+                 datatbl.setValue(i+7, 3, v.FeelsLike);
+                 datatbl.setValue(i+7, 4, v.HumidityOut);
+                 datatbl.setValue(i+7, 5, v.WindDirection);
+                 datatbl.setValue(i+7, 6, v.WindAvg);
+                 datatbl.setValue(i+7, 7, v.WindGust);
+                 datatbl.setValue(i+7, 8, v.Rain);
+                 datatbl.setValue(i+7, 9, v.AbsPressure);
+            });
+            
+            datatbl.sort([{column: 0}]);
+            
+            //draw the chart - work in progress
+            var view1 = new google.visualization.DataView(datatbl);
+            view1.setColumns([0,2]);
+            
+            var optionsCht1 = {
+              width: 900, height: 240,
+              title: 'Outside Temp for the last 20 hrs (degC)',
+              vAxis: {minValue: 20},
+              legend: {position: 'none'},
+              lineWidth: 3
+            };
+
+            var chart1 = new google.visualization.ScatterChart(document.getElementById('chart_div1'));
+            chart1.draw(view1, optionsCht1);
+            
+             //draw the chart - work in progress
+            var view2 = new google.visualization.DataView(datatbl);
+            view2.setColumns([0,9]);
+
+            var optionsCht2 = {
+              width: 900, height: 240,
+              title: 'Barometric Pressure for the last 20 hrs',
+              vAxis: {minValue: 995, maxValue: 1005},
+              legend: {position: 'none'},
+              lineWidth: 3
+            };
+
+            var chart2 = new google.visualization.ScatterChart(document.getElementById('chart_div2'));
+            chart2.draw(view2, optionsCht2);
+            
+        });        
+        
+        //------------------------------------------------------------------------
+        //the wind vane chart
+        //
+        var windArray = new Array(16);
+        for (var i = 0; i < 16; i++) windArray[i] = 0;
+        //
+        var windArrayItems = new Array(16);
+        for (var j = 0; j < 16; j++) windArrayItems[j] = 0;
+        
+        $.getJSON('data/6hrs_wind.txt', function(dataWnd) {
+            var dataTableWind = new google.visualization.DataTable();
+            var maxWind = 0;
+            dataTableWind.addColumn('number');
+             
+            dataTableWind.addRows(17); //this is 16 directions plus 1 to "close" the plot
+            $.each(dataWnd, function(i,v) {
+            	//set the maximum wind value
+            	if (v.WindAvg > maxWind) {
+            		maxWind = v.WindAvg;
+            	}
+            	windArrayItems[v.WindDirection] = windArrayItems[v.WindDirection] + 1;
+            	windArray[v.WindDirection] = windArray[v.WindDirection] + v.WindAvg;
+                 // set the values for both the name and the population
+                 //datatbl.setValue(i, 0, v.WindAvg);
+                
+            });
+            for (var i = 0; i < 16; i++) {
+            	if (windArrayItems[i] > 0) {
+            		windArray[i] = windArray[i]/windArrayItems[i];
+            	}
+            	dataTableWind.setValue(i, 0, windArray[i]);
+            }
+            //now the final one
+            dataTableWind.setValue(16, 0, windArray[0]);
+
+            var optionsWindVane = {
+	          chxl: '0:|North|NNE|NE|ENE|East|ESE|SE|SSE|South|SSW|SW|WSW|West|WNW|NW|NNW',
+	          chxp: '',
+	          chxs: '',
+	          chxtc: '',
+	          chxt: 'x,y',
+	          chs: '300x300',
+	          cht: 'r',
+	          chco: 'FF0000',
+	          chls: '2,4,0',
+	          chm: 'B,FF000080,0,0,0',
+	          chtt: 'Wind Speed for the last 6 hrs (kph)',
+	          chof: 'png'
+	    };
+	    optionsWindVane.chxr = '0,0,20|1,0,' + maxWind*1.1;
+	    optionsWindVane.chds = '0,' + maxWind*1.1;
+        
+            var windvane = new google.visualization.ImageChart(document.getElementById('wind_div'));
+            windvane.draw(dataTableWind, optionsWindVane);  
+            
+        });  
+        //end of wind vane
+        //------------------------------------------------------------------------
+
+     
+    });
+   </script>
 
 </head>
 
