@@ -1,0 +1,20 @@
+[
+  {
+      "WindDirection": 13,
+      "WindAvg": 0.50  },
+  {
+      "WindDirection": 12,
+      "WindAvg": 0.66  },
+  {
+      "WindDirection": 12,
+      "WindAvg": 0.61  },
+  {
+      "WindDirection": 11,
+      "WindAvg": 0.56  },
+  {
+      "WindDirection": 11,
+      "WindAvg": 0.71  },
+  {
+      "WindDirection": 12,
+      "WindAvg": 1.01  }
+]
