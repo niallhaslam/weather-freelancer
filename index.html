@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Freelancer - Start Bootstrap Theme</title>
+    <title>Local Weather</title>
 
     <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +28,58 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+  
+  <script type="text/javascript" language="javascript">
+    //load the table package
+    google.load('visualization', '1', {packages:['table']});
+      $(document).ready(function() {
+        
+        var datatbl = new google.visualization.DataTable();
+        
+        //get the data from the file and load it into the google datatable
+        $.getJSON('data/live_json.txt', function(data) {
+        
+            //create the rows and columns in the datatable
+        	var noElements = data.length; 
+            datatbl.addColumn('datetime', 'Date');
+            datatbl.addColumn('string', 'Time');
+            datatbl.addColumn('number', 'Outside Temp');
+            datatbl.addColumn('number', 'Apparent Temp');
+            datatbl.addColumn('number', 'Humidity Outside (%)');
+            datatbl.addColumn('string', 'Wind Direction');
+            datatbl.addColumn('number', 'Wind Avg Speed (kph)');
+            datatbl.addColumn('number', 'Wind Gust (kph)');
+            datatbl.addColumn('number', 'Rain (mm)');
+            datatbl.addColumn('number', 'Abs Pressure (hPa)');
+            datatbl.addRows(noElements);
+            
+            //Put the data into the datatable
+            $.each(data, function(i,v) {
+                 // set the values for both the name and the population
+                 datatbl.setValue(i, 0, new Date(v.Date));
+                 datatbl.setValue(i, 1, v.Time);
+                 datatbl.setValue(i, 2, v.TempOut);
+                 datatbl.setValue(i, 3, v.FeelsLike);
+                 datatbl.setValue(i, 4, v.HumidityOut);
+                 datatbl.setValue(i, 5, v.WindDirection);
+                 datatbl.setValue(i, 6, v.WindAvg);
+                 datatbl.setValue(i, 7, v.WindGust);
+                 datatbl.setValue(i, 8, v.Rain);
+                 datatbl.setValue(i, 9, v.AbsPressure);
+            }); 
+            
+            //create an instance of the google table chart
+            var table = new google.visualization.Table(document.getElementById('table_div'));
+            
+            //draw the table chart
+            table.draw(datatable);
+        
+        });
+});
+    </script>
 
 </head>
 
@@ -108,7 +160,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="img/portfolio/cabin.png" class="img-responsive" alt="">
+                        <img src="img/wicons/warm.png" class="img-responsive" alt="">
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
@@ -118,7 +170,7 @@
                                 <i class="fa fa-search-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img src="img/portfolio/cake.png" class="img-responsive" alt="">
+                        <img src="img/wicons/stormy.png" class="img-responsive" alt="">
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item">
@@ -338,10 +390,12 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Overall </h2>
                             <hr class="star-primary">
-                            <img src="img/portfolio/cabin.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="img/wicons/warm.png" class="img-responsive img-centered" alt="">
+                            <p>
+                            <div id='table_div'></div>
+                            </p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -375,10 +429,10 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Rainfall</h2>
                             <hr class="star-primary">
-                            <img src="img/portfolio/cake.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="img/wicons/spite-rainfall.png" class="img-responsive img-centered" alt="">
+                            <p>Rainfall in the last period.</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -412,10 +466,10 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Wind</h2>
                             <hr class="star-primary">
-                            <img src="img/portfolio/circus.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="img/wicons/stormy.png" class="img-responsive img-centered" alt="">
+                            <p>Wind related things.</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
@@ -449,10 +503,10 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Project Title</h2>
+                            <h2>Pressure</h2>
                             <hr class="star-primary">
-                            <img src="img/portfolio/game.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            <img src="img/wicons/red_umbrella.png" class="img-responsive img-centered" alt="">
+                            <p>Pressure related</p>
                             <ul class="list-inline item-details">
                                 <li>Client:
                                     <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
