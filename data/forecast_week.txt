@@ -1,0 +1,7 @@
+<table border="1" rules="all">
+  <tr>
+    <th>date &amp; time</th>
+    <th>Forecast for the following 12 hours</th>
+  </tr>
+<tr><td>Sunday 22 February, 08:31 UTC</td><td>Stormy, much rain</td></tr><tr><td>Monday 23 February, 08:31 UTC</td><td>Stormy, much rain</td></tr><tr><td>Tuesday 24 February, 08:31 UTC</td><td>Unsettled, probably improving</td></tr><tr><td>Wednesday 25 February, 08:31 UTC</td><td>Rather unsettled clearing later</td></tr><tr><td>Thursday 26 February, 08:31 UTC</td><td>Rather unsettled clearing later</td></tr><tr><td>Friday 27 February, 08:31 UTC</td><td>Changeable, some rain</td></tr><tr><td>Saturday 28 February, 08:31 UTC</td><td>Rain, very unsettled</td></tr>
+</table>
