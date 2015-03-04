@@ -16,11 +16,12 @@
 
     <!-- Custom CSS -->
     <link href="css/freelancer.css" rel="stylesheet">
-
+    <link href="css/weather.css" rel="stylesheet">
+    
     <!-- Custom Fonts -->
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="css/googlemonserrat.css" rel="stylesheet" type="text/css">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,9 +29,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+ <script src="js/jquery.js"></script>
+
+<script type='text/javascript' src='js/jsapi'></script>
   
   <script type="text/javascript" language="javascript">
     //load the table package
@@ -50,9 +51,8 @@
         var formatter2 = new google.visualization.DateFormat({pattern: "hh:mm aa"});
         //get the data from the file and load it into the google datatable
         $.getJSON('data/live_json.txt', function(data) {
-            
-            
-            var noElements = data.length; 
+            data.pop();
+            var noElements = data.length;
             datatbl.addColumn('datetime', 'Date');
             datatbl.addColumn('string', 'Time');
             datatbl.addColumn('number', 'Outside Temp');
@@ -83,7 +83,7 @@
             
             //declare the chart (which is a table) and draw it 
             var viewTable = new google.visualization.DataView(datatbl);
-            viewTable.setColumns([0,2,3,4,8,9]);
+            viewTable.setColumns([0,2,3,4,5,6,7,8,9]);
             var table = new google.visualization.Table(document.getElementById('table_div'));
             table.draw(viewTable);
 
@@ -97,44 +97,107 @@
               height: 240, 
               redFrom: 35, 
               redTo: 45,
-              yellowFrom:28, 
-              yellowTo: 35, 
+              yellowFrom:15,
+              yellowTo: 30  , 
+              greenColor: '#9999FF',
+              greenFrom: -20,
+              greenTo: 5,
               minorTicks: 5, 
-              max: 45
+              max: 45,
+            min: -20
             };
             var gauge = new google.visualization.Gauge(document.getElementById('gauge_div'));
             gauge.draw(viewGauge, optionsGauge);
+            
+            // Other up to date charts/guages to go here. 
+            //draw the gauge - work in progress
+            var viewGaugeWind = new google.visualization.DataView(datatbl);
+            viewGaugeWind.setColumns([1,6,7]);
+            viewGaugeWind.setRows([noElements-1]);
+            var optionsWindGauge = {
+              width: 640,
+              height: 240, 
+              redFrom: 60, 
+              redTo: 100,
+              yellowFrom:15,
+              yellowTo: 60 , 
+              greenColor: '#9999FF',
+              greenFrom: 0,
+              greenTo: 5,
+              minorTicks: 5, 
+              max: 120,
+            min: 0
+            };
+            var Windgauge = new google.visualization.Gauge(document.getElementById('windgauge_div'));
+            Windgauge.draw(viewGaugeWind, optionsWindGauge);
+            
+            // Other up to date charts/guages to go here. 
+            //draw the Barometer gauge - work in progress
+            var viewGaugeBar = new google.visualization.DataView(datatbl);
+            viewGaugeBar.setColumns([0,9]);
+            viewGaugeBar.setRows([noElements-1]);
+            var optionsBarGauge = {
+              width: 640,
+              height: 240, 
+              redFrom: 60, 
+              redTo: 100,
+              yellowFrom:15,
+              yellowTo: 60 , 
+              greenColor: '#9999FF',
+              greenFrom: 0,
+              greenTo: 5,
+              minorTicks: 5, 
+              max: 1400,
+            min: 0
+            };
+            var Bargauge = new google.visualization.Gauge(document.getElementById('bargauge_div'));
+            Bargauge.draw(viewGaugeBar, optionsBarGauge);
+            
+            
+            
         });
   
-        $.getJSON('data/6hrs_json.txt', function(data1) {
+        $.getJSON('data/24hrs_json.txt', function(data1) {
             var datatbl1 = new google.visualization.DataTable();
-            
+            var formatter1 = new google.visualization.DateFormat({pattern: "d MMM yyyy '  'hh:mm aa"});
+        var formatter2 = new google.visualization.DateFormat({pattern: "hh:mm aa"});
+            data1.pop();
             var noElements = data1.length; 
-            datatbl.addRows(noElements);
+            datatbl1.addRows(noElements);
             $.each(data1, function(i,v) {
+                    datatbl1.addColumn('datetime', 'Date');
+                    datatbl1.addColumn('string', 'Time');
+                    datatbl1.addColumn('number', 'Outside Temp');
+                    datatbl1.addColumn('number', 'Apparent Temp');
+                    datatbl1.addColumn('number', 'Humidity Outside (%)');
+                    datatbl1.addColumn('string', 'Wind Direction');
+                    datatbl1.addColumn('number', 'Wind Avg Speed (kph)');
+                    datatbl1.addColumn('number', 'Wind Gust (kph)');
+                    datatbl1.addColumn('number', 'Rain (mm)');
+                    datatbl1.addColumn('number', 'Abs Pressure (hPa)');
                  // set the values for both the name and the population
-                 datatbl.setValue(i+7, 0, new Date(v.Date));
-                 datatbl.setValue(i+7, 1, v.Time);
-                 datatbl.setValue(i+7, 2, v.TempOut);
-                 datatbl.setValue(i+7, 3, v.FeelsLike);
-                 datatbl.setValue(i+7, 4, v.HumidityOut);
-                 datatbl.setValue(i+7, 5, v.WindDirection);
-                 datatbl.setValue(i+7, 6, v.WindAvg);
-                 datatbl.setValue(i+7, 7, v.WindGust);
-                 datatbl.setValue(i+7, 8, v.Rain);
-                 datatbl.setValue(i+7, 9, v.AbsPressure);
+                 datatbl1.setValue(i, 0, new Date(v.Date));
+                 datatbl1.setValue(i, 1, v.Time);
+                 datatbl1.setValue(i, 2, v.TempOut);
+                 datatbl1.setValue(i, 3, v.FeelsLike);
+                 datatbl1.setValue(i, 4, v.HumidityOut);
+                 datatbl1.setValue(i, 5, v.WindDirection);
+                 datatbl1.setValue(i, 6, v.WindAvg);
+                 datatbl1.setValue(i, 7, v.WindGust);
+                 datatbl1.setValue(i, 8, v.Rain);
+                 datatbl1.setValue(i, 9, v.AbsPressure);
             });
             
-            datatbl.sort([{column: 0}]);
+            datatbl1.sort([{column: 0}]);
             
             //draw the chart - work in progress
-            var view1 = new google.visualization.DataView(datatbl);
+            var view1 = new google.visualization.DataView(datatbl1);
             view1.setColumns([0,2]);
             
             var optionsCht1 = {
               width: 900, height: 240,
-              title: 'Outside Temp for the last 20 hrs (degC)',
-              vAxis: {minValue: 20},
+              title: 'Outside Temp for the last 24 hrs (degC)',
+              vAxis: {minValue: -10},
               legend: {position: 'none'},
               lineWidth: 3
             };
@@ -143,13 +206,13 @@
             chart1.draw(view1, optionsCht1);
             
              //draw the chart - work in progress
-            var view2 = new google.visualization.DataView(datatbl);
+            var view2 = new google.visualization.DataView(datatbl1);
             view2.setColumns([0,9]);
 
             var optionsCht2 = {
               width: 900, height: 240,
-              title: 'Barometric Pressure for the last 20 hrs',
-              vAxis: {minValue: 995, maxValue: 1005},
+              title: 'Barometric Pressure for the last 24 hrs',
+              vAxis: {minValue: 800, maxValue: 1100},
               legend: {position: 'none'},
               lineWidth: 3
             };
@@ -162,6 +225,7 @@
         //------------------------------------------------------------------------
         //the wind vane chart
         //
+        
         var windArray = new Array(16);
         for (var i = 0; i < 16; i++) windArray[i] = 0;
         //
@@ -169,7 +233,7 @@
         for (var j = 0; j < 16; j++) windArrayItems[j] = 0;
         
         $.getJSON('data/6hrs_wind.txt', function(dataWnd) {
-            var dataTableWind = new google.visualization.DataTable();
+            var dataTableWind = new google.visualization.DataTable(dataWnd);
             var maxWind = 0;
             dataTableWind.addColumn('number');
              
@@ -213,12 +277,13 @@
         
             var windvane = new google.visualization.ImageChart(document.getElementById('wind_div'));
             windvane.draw(dataTableWind, optionsWindVane);  
-            
+             
         });  
+        
         //end of wind vane
         //------------------------------------------------------------------------
-
-     
+        
+    
     });
    </script>
 
@@ -250,17 +315,12 @@
                         <a href="#hourly">Hourly</a>
                     </li>
                     <li class="page-scroll">
-                        <a href="#about">6 Hours</a>
+                        <a href="#forecast">Forecast</a>
                     </li>
                     <li class="page-scroll">
                         <a href="#daily">Daily</a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="#weekly">Weekly</a>
-                    </li>
-                    <li class="page-scroll">
-                        <a href="#alltime">All Time</a>
-                    </li>
+                    
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -358,29 +418,30 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="success" id="about">
+    <!-- Forecast Section -->
+    <section class="success" id="forecast">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>6 Hours</h2>
+                    <h2>Forecast</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Weather for the last six hours.</p>
+                    <p>Weather forecast</p>
                 </div>
                 <div class="col-lg-4">
-                    <p>
-                    </p>
+                    
+                     <div id="week-forecast"></div>
+ 
+<script>
+$("#week-forecast" ).load( "data/forecast_week.txt");
+</script>
+                        
+                    
                 </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <img src="" alt="6hrs.png should go here." class="img-circle">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -390,22 +451,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h2>6 Hours</h2>
+                    <h2>Daily</h2>
                     <hr class="star-light">
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>Weather for the last six hours.</p>
+                    <p>Weather info collated in the last day</p>
                 </div>
                 <div class="col-lg-4">
                     <p>
                     </p>
                 </div>
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <img src="data/24hrs.png" alt="..." class="img-circle">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
+                    <a href="data/24hrs_full_features.png">
+                    <img src="data/24hrs.png" alt="..." class="img-circle" height="100em">
                     </a>
                 </div>
             </div>
@@ -413,55 +473,8 @@
     </section>
 
         <!-- About Section -->
-    <section class="success" id="weekly">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>6 Hours</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Weather for the last six hours.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                    </p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <img src="data/24hrs.png" alt="..." class="img-circle">
-                    <a href="#" class="btn btn-lg btn-outline">
-                        <i class="fa fa-download"></i> Download Theme
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
             <!-- All Time Section - commented out till more data is available.
-    <section class="success" id="alltime">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2>6 Hours</h2>
-                    <hr class="star-light">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Weather for all time.</p>
-                </div>
-                <div class="col-lg-4">
-                    <p>
-                    </p>
-                </div>
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <img src="data/24hrs.png" alt="..." class="img-circle">
-                    
-                </div>
-            </div>
-        </div>
+    
     </section>
 -->
     <!-- Footer -->
@@ -535,22 +548,20 @@
                             <hr class="star-primary">
                             <img src="img/wicons/thermometer.png" class="img-responsive img-centered" alt="">
                            <p>Current weather table.</p>
-                            <div id='table_div'></div> <!-- this is where the table should appear -->
+                            
+<!-- this is where the table should appear -->
+                            <center>
+    <div id='table_div'></div>
+    <div id='chart_div'></div>
+    <div id='gauge_div'></div>
+    <div id='windgauge_div'></div>  
+    <div id='bargauge_div'></div>
+    
+    
+    <div id='debug'></div>
+  </center>
                            
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -570,24 +581,12 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Rainfall</h2>
+                            <h2>Temperature</h2>
                             <hr class="star-primary">
                             <img src="img/wicons/spite-rainfall.png" class="img-responsive img-centered" alt="">
-                            <p>Rainfall in the last period.</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <p>Temperature in the last period.</p>
+                            <div id='chart_div1'></div>
+    
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -607,24 +606,11 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Wind</h2>
+                            <h2>Pressure</h2>
                             <hr class="star-primary">
                             <img src="img/wicons/stormy.png" class="img-responsive img-centered" alt="">
-                            <p>Wind related things.</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <p>Pressure related things.</p>
+                            <div id='chart_div2'></div>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -644,24 +630,11 @@
                 <div class="row">
                     <div class="col-lg-8 col-lg-offset-2">
                         <div class="modal-body">
-                            <h2>Pressure</h2>
+                            <h2>Wind</h2>
                             <hr class="star-primary">
                             <img src="img/wicons/red_umbrella.png" class="img-responsive img-centered" alt="">
                             <p>Pressure related</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <div id='wind_div'></div>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -684,21 +657,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="img/portfolio/safe.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -721,21 +681,8 @@
                             <h2>Project Title</h2>
                             <hr class="star-primary">
                             <img src="img/portfolio/submarine.png" class="img-responsive img-centered" alt="">
-                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by <a href="https://sellfy.com/p/8Q9P/jV3VZ/">Flat Icons</a>. On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
-                            <ul class="list-inline item-details">
-                                <li>Client:
-                                    <strong><a href="http://startbootstrap.com">Start Bootstrap</a>
-                                    </strong>
-                                </li>
-                                <li>Date:
-                                    <strong><a href="http://startbootstrap.com">April 2014</a>
-                                    </strong>
-                                </li>
-                                <li>Service:
-                                    <strong><a href="http://startbootstrap.com">Web Development</a>
-                                    </strong>
-                                </li>
-                            </ul>
+                            <p>Use this area of the page to describe your project. The icon above is part of a free icon set by . On their website, you can download their free set with 16 icons, or you can purchase the entire set with 146 icons for only $12!</p>
+                            
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -751,7 +698,7 @@
     <script src="js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/jqueryeasingmin.js"></script>
     <script src="js/classie.js"></script>
     <script src="js/cbpAnimatedHeader.js"></script>
 
