@@ -2,6 +2,10 @@
     background-color: yellow;
 }
 
+
+.weathersub {
+   color: #774F38;
+}
 A:link {text-decoration: none}
 A:visited {text-decoration: none}
 A:active {text-decoration: none}
@@ -10,7 +14,7 @@ A:hover {text-decoration: underline;}
     color: #007000;
     }
 .bordered {
-    border: 1px solid tan;
+    border: 1px solid #F1D4AF;
 }
 .cell {
     margin: 3px;
@@ -76,7 +80,7 @@ A:hover {text-decoration: underline;}
     padding-bottom: 0px;
     clear: both;
     height: 21px;
-    border-bottom: 1px solid tan;
+    border-bottom: 1px solid #F1D4AF;
 }
 .tab {
     margin-bottom:3px;
@@ -88,15 +92,15 @@ A:hover {text-decoration: underline;}
     padding-bottom: 2px;
     float: left;
     height: 16px;
-    background: wheat;
-    border-bottom: 1px solid wheat;
+    background: #F1D4AF;
+    border-bottom: 1px solid #F1D4AF;
 }
 .selected {
     background: white;
-    border-right: 1px solid tan;
-    border-top: 1px solid tan;
-    border-left: 1px solid tan;
-    border-bottom: 1px solid white;
+    border-right: 1px solid ;
+    border-top: 1px solid #F1D4AF;
+    border-left: 1px solid #F1D4AF;
+    border-bottom: 1px solid #ECE5CE;
 }
 .symbol {
     font-size:120%;
@@ -108,4 +112,16 @@ A:hover {text-decoration: underline;}
     position: relative;
     right: 0px;
     text-align: right;
+}
+.navbar-default .navbar-brand {
+  color: #ECE5CE ;
+}
+.navbar-default .navbar-nav>li>a {
+  color: #ECE5CE ;
+}
+.icon-bar {
+  background-color: #ECE5CE;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ECE5CE;
 }

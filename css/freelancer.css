@@ -22,7 +22,7 @@ a:focus,
 a:active,
 a.active {
     outline: 0;
-    color: #18bc9c;
+    color: #C5E0DC;
 }
 
 h1,
@@ -58,21 +58,21 @@ hr.star-primary:after {
 }
 
 hr.star-light {
-    border-color: #fff;
+    border-color: #774F38 ;
 }
 
 hr.star-light:after {
-    color: #fff;
-    background-color: #18bc9c;
+    color: #774F38 ;
+    background-color: #C5E0DC ;
 }
 
 hr.star-primary {
-    border-color: #2c3e50;
+    border-color: #774F38 ;
 }
 
 hr.star-primary:after {
-    color: #2c3e50;
-    background-color: #fff;
+    color: #774F38 ;
+    background-color: #C5E0DC ;
 }
 
 .img-centered {
@@ -81,8 +81,8 @@ hr.star-primary:after {
 
 header {
     text-align: center;
-    color: #fff;
-    background: #18bc9c;
+    color: #774F38;
+    background: #C5E0DC;
 }
 
 header .container {
@@ -149,6 +149,7 @@ header .intro-text .skills {
 
 .navbar {
     text-transform: uppercase;
+    background: #774F38;
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: 700;
 }
@@ -172,6 +173,7 @@ header .intro-text .skills {
 
 section {
     padding: 100px 0;
+    background: #C5E0DC ;
 }
 
 section h2 {
@@ -181,7 +183,7 @@ section h2 {
 
 section.success {
     color: #fff;
-    background: #18bc9c;
+    background: #C5E0DC;
 }
 
 @media(max-width:767px) {
@@ -197,6 +199,7 @@ section.success {
 #portfolio .portfolio-item {
     right: 0;
     margin: 0 0 15px;
+    background: #C5E0DC ;
 }
 
 #portfolio .portfolio-item .portfolio-link {
@@ -211,7 +214,7 @@ section.success {
     width: 100%;
     height: 100%;
     opacity: 0;
-    background: rgba(24,188,156,.9);
+    background: ;
     -webkit-transition: all ease .5s;
     -moz-transition: all ease .5s;
     transition: all ease .5s;
@@ -243,6 +246,7 @@ section.success {
 
 #portfolio * {
     z-index: 2;
+    
 }
 
 @media(min-width:767px) {
@@ -265,7 +269,7 @@ section.success {
 .btn-outline:active,
 .btn-outline.active {
     border: solid 2px #fff;
-    color: #18bc9c;
+    color: #C5E0DC;
     background: #fff;
 }
 
@@ -318,7 +322,7 @@ section.success {
 }
 
 .floating-label-form-group-with-focus label {
-    color: #18bc9c;
+    color: #C5E0DC;
 }
 
 form .row:first-child .floating-label-form-group {
@@ -326,7 +330,7 @@ form .row:first-child .floating-label-form-group {
 }
 
 footer {
-    color: #fff;
+    color: #ECE5CE;
 }
 
 footer h3 {
@@ -335,7 +339,7 @@ footer h3 {
 
 footer .footer-above {
     padding-top: 50px;
-    background-color: #2c3e50;
+    background-color: #774F38;
 }
 
 footer .footer-col {
@@ -344,7 +348,7 @@ footer .footer-col {
 
 footer .footer-below {
     padding: 25px 0;
-    background-color: #233140;
+    background-color: #774F38;
 }
 
 .btn-social {
@@ -378,6 +382,7 @@ footer .footer-below {
     height: 50px;
     border-radius: 100%;
     font-size: 20px;
+    background: #774F38 ;
     line-height: 28px;
 }
 
@@ -392,6 +397,7 @@ footer .footer-below {
     border-radius: 0;
     text-align: center;
     background-clip: border-box;
+    background: #C5E0DC; 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
@@ -428,7 +434,7 @@ footer .footer-below {
     width: 1px;
     height: 75px;
     margin-left: 35px;
-    background-color: #2c3e50;
+    background-color: #774F38;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
@@ -438,7 +444,7 @@ footer .footer-below {
     z-index: 1052;
     width: 1px;
     height: 75px;
-    background-color: #2c3e50;
+    background-color: #774F38;
     -webkit-transform: rotate(90deg);
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
